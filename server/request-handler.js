@@ -26,7 +26,7 @@ var requestHandler = function(request, response) {
   } else if (request.method === 'GET') { 
       headers['Content-Type'] = "application/json";
       response.writeHead(statusCode, headers);
-     response.end(JSON.stringify(messageData));
+      response.end(JSON.stringify(messageData));
 
   } else if (request.method === 'POST') {
       var body = ''; 
@@ -40,10 +40,8 @@ var requestHandler = function(request, response) {
 
       headers['Content-Type'] = "application/json";
       response.writeHead(201, headers);
-      response.end();
+      response.end(JSON.stringify(messageData));
   }
-
-
 
 };
 
