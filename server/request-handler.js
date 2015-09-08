@@ -13,10 +13,11 @@ var requestHandler = function(request, response) {
   var urlObj = {
     '/classes/messages': true, 
     '/classes/room': true,
-    '/classes/room1': true
+    '/classes/room1': true, 
+    '/?order=-createdAt': true
   }; 
   console.log("Serving request type " + request.method + " for url " + request.url);
- 
+  console.log(messageData);
   // The outgoing status.
   var statusCode = 200;
 
@@ -29,9 +30,10 @@ var requestHandler = function(request, response) {
     response.end();
 
   } else if (request.method === 'GET') { 
-    if(urlObj.hasOwnProperty(request.url)){
+    if(urlObj.hasOwnProperty(request.url)){ //checking for url
       headers['Content-Type'] = "application/json";
       response.writeHead(statusCode, headers);
+      console.log(messageData, " is our message data! :D ");
       response.end(JSON.stringify(messageData));
     } else {
       response.writeHead(404, {'Content-Type': 'text/plain'});
@@ -39,6 +41,7 @@ var requestHandler = function(request, response) {
     }
       
   } else if (request.method === 'POST') {
+
       var body = ''; 
       request.on('data', function(chunk){
         body += chunk; 

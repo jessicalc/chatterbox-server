@@ -59,7 +59,7 @@ describe('Node Server Request Listener Function', function() {
   it('Should accept posts to /classes/room', function() {
     var stubMsg = {
       username: 'Jono',
-      message: 'Do my bidding!'
+      text: 'Do my bidding!'
     };
     var req = new stubs.request('/classes/room1', 'POST', stubMsg);
     var res = new stubs.response();
@@ -78,7 +78,7 @@ describe('Node Server Request Listener Function', function() {
 it('Should respond with messages that were previously posted', function() {
     var stubMsg = {
       username: 'Jono',
-      message: 'Do my bidding!'
+      text: 'Do my bidding!'
     };
     var req = new stubs.request('/classes/room1', 'POST', stubMsg);
     var res = new stubs.response();
@@ -92,12 +92,21 @@ it('Should respond with messages that were previously posted', function() {
     res = new stubs.response();
 
     handler.requestHandler(req, res);
+    console.log("stubMsg is!!!! ", stubMsg);
 
     expect(res._responseCode).to.equal(200);
-    var messages = JSON.parse(res._data).results;
-    expect(messages.length).to.be.above(0);
-    expect(messages[0].username).to.equal('Jono');
-    expect(messages[0].message).to.equal('Do my bidding!');
+    var messages = JSON.parse(res._data);
+    
+    console.log(messages.results, " is our messages");
+    
+    console.log('length of messages!!!!!!!!! ', messages.results.length);
+    expect(messages.results.length).to.be.above(0);
+    
+    console.log(messages.results[0].username, ' username');
+    expect(messages.results[0].username).to.equal('Jono');
+    
+    console.log(messages.results[0].text, ' message');
+    expect(messages.results[0].text).to.equal('Do my bidding!');
     expect(res._ended).to.equal(true);
   });
 
