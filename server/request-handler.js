@@ -21,13 +21,13 @@ var requestHandler = function(request, response) {
   if (request.method === 'OPTIONS') {
     headers['Content-Type'] = "text/plain";
     response.writeHead(statusCode, headers);
-    response.end("Hello, World!");
+    response.end();
 
   } else if (request.method === 'GET') { 
       headers['Content-Type'] = "application/json";
       response.writeHead(statusCode, headers);
       response.end(JSON.stringify(messageData));
-
+      
   } else if (request.method === 'POST') {
       var body = ''; 
       request.on('data', function(chunk){
