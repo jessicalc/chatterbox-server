@@ -8,10 +8,15 @@ this file and include it in basic-server.js so that it actually works.
 **************************************************************/
 var messageData = {results: []};
 
+//everything after "127.0.0.1/3000" <-- url that we want to mess with. 
 var requestHandler = function(request, response) {
-  
+  var urlObj = {
+    '/classes/messages': true, 
+    '/classes/room': true,
+    '/classes/room1': true
+  }; 
   console.log("Serving request type " + request.method + " for url " + request.url);
-
+ 
   // The outgoing status.
   var statusCode = 200;
 
@@ -24,9 +29,14 @@ var requestHandler = function(request, response) {
     response.end();
 
   } else if (request.method === 'GET') { 
+    if(urlObj.hasOwnProperty(request.url)){
       headers['Content-Type'] = "application/json";
       response.writeHead(statusCode, headers);
       response.end(JSON.stringify(messageData));
+    } else {
+      response.writeHead(404, {'Content-Type': 'text/plain'});
+      response.end(); 
+    }
       
   } else if (request.method === 'POST') {
       var body = ''; 
